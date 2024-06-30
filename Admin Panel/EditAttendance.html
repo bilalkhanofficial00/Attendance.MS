@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Management</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .spacer {
+      margin-top: 20px;
+    }
+    body{
+        background-color: aquamarine;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+  <br><br>  <h1 class="text-center">ADD AND DELETE ATTENDANCE</h1>
+    <div class="spacer"></div>
+    <div class="row">
+      <div class="col-md-6">
+        <br><br>  <h2>Add Attendance</h2><br><br>
+        <form id="addForm">
+          <div class="form-group">
+            <label for="studentName">Student Name</label>
+            <input type="text" class="form-control" id="studentName" required>
+          </div>
+          <div class="form-group">
+            <label for="attendanceDate">Attendance Date</label>
+            <input type="date" class="form-control" id="attendanceDate" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Attendance</button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <br><br> <h2 style="margin-left: 200px;">Attendance List</h2><br><br>
+        <ul id="attendanceList" class="list-group">
+          <!-- Attendance items will be added here -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Array to store attendance records
+    let attendanceRecords = [];
+
+    // Function to add attendance
+    function addAttendance(studentName, attendanceDate) {
+      attendanceRecords.push({ studentName, attendanceDate });
+      renderAttendanceList();
+    }
+
+    // Function to delete attendance
+    function deleteAttendance(index) {
+      attendanceRecords.splice(index, 1);
+      renderAttendanceList();
+    }
+
+    // Function to render attendance list
+    function renderAttendanceList() {
+      const attendanceList = document.getElementById('attendanceList');
+      attendanceList.innerHTML = '';
+      attendanceRecords.forEach((record, index) => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.innerHTML = `<strong>${record.studentName}</strong> - ${record.attendanceDate}
+                        <button class="btn btn-sm btn-danger float-right" onclick="deleteAttendance(${index})">Delete</button>`;
+        attendanceList.appendChild(li);
+      });
+    }
+
+    // Form submission event handler
+    document.getElementById('addForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const studentName = document.getElementById('studentName').value;
+      const attendanceDate = document.getElementById('attendanceDate').value;
+      addAttendance(studentName, attendanceDate);
+      // Reset the form after adding attendance
+      this.reset();
+    });
+
+  </script>
+</body>
+</html>

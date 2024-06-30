@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Attendance</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    
+    .spacer {
+      margin-top: 20px;
+    }
+    body{
+        background-color:floralwhite;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+  <br><br>   <h1 class="text-center">Students Record</h1><br> <br> 
+    <div class="spacer"></div>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Class Year</th>
+              <th>Total Absents</th>
+              <th>Total Presents</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentsList">
+            <!-- Student details will be added here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sample student data
+    const students = [
+      { name: "John Doe", age: 18, classYear: 2023, absents: 0, presents: 2 },
+      { name: "Jane Smith", age: 17, classYear: 2023, absents: 4, presents: 0 },
+      { name: "John Doe", age: 12, classYear: 2023, absents: 7, presents: 0 },
+      { name: "Jane Smith", age: 12, classYear: 2023, absents: 0, presents: 0 },
+      { name: "John Doe", age: 18, classYear: 2023, absents: 0, presents: 5 },
+      { name: "Jane Smith", age: 17, classYear: 2023, absents: 2, presents: 0 },
+      { name: "John Doe", age: 12, classYear: 2023, absents: 0, presents: 6 },
+      { name: "Jane Smith", age: 17, classYear: 2023, absents: 0, presents: 0 },
+      // Add more students here
+    ];
+
+    // Function to render student list
+    function renderStudentsList() {
+      const studentsList = document.getElementById('studentsList');
+      studentsList.innerHTML = '';
+      students.forEach((student, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${student.name}</td>
+          <td>${student.age}</td>
+          <td>${student.classYear}</td>
+          <td>${student.absents}</td>
+          <td>${student.presents}</td>
+          <td>
+            <button class="btn btn-success" onclick="markPresent(${index})">Present</button>
+            <button class="btn btn-danger" onclick="markAbsent(${index})">Absent</button>
+          </td>`;
+        studentsList.appendChild(tr);
+      });
+    }
+
+    // Function to mark student present
+    function markPresent(index) {
+      students[index].presents++;
+      renderStudentsList();
+    }
+
+    // Function to mark student absent
+    function markAbsent(index) {
+      students[index].absents++;
+      renderStudentsList();
+    }
+
+    // Initial rendering of student list
+    renderStudentsList();
+
+  </script>
+</body>
+</html>

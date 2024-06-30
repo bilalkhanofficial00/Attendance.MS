@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave Request Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+  body{
+    background-color: bisque;
+}
+</style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Leave Request Form</h2>
+    <form id="leave-request-form">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="leave-type">Leave Type:</label>
+        <select class="form-control" id="leave-type" name="leave_type" required>
+          <option value="">Select Leave Type</option>
+          <option value="Sick Leave">Sick Leave</option>
+          <option value="Vacation Leave">Vacation Leave</option>
+          <option value="Personal Leave">Personal Leave</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="start-date">Start Date:</label>
+        <input type="date" class="form-control" id="start-date" name="start_date" required>
+      </div>
+      <div class="form-group">
+        <label for="end-date">End Date:</label>
+        <input type="date" class="form-control" id="end-date" name="end_date" required>
+      </div>
+      <div class="form-group">
+        <label for="reason">Reason for Leave:</label>
+        <textarea class="form-control" id="reason" name="reason" rows="3" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('leave-request-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Fetch form data
+      const formData = new FormData(this);
+
+      // Send form data to the server (You can use AJAX for this part)
+      // Example using fetch API
+      fetch('process_leave_request.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Leave request submitted successfully.');
+          // Reset form fields if submission was successful
+          document.getElementById('leave-request-form').reset();
+        } else {
+          alert('Failed to submit leave request.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to submit leave request because real time data is not connected.');
+      });
+    });
+  </script>
+</body>
+</html>

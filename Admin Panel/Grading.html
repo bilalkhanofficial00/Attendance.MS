@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<br><br><title>Grading System</title><br><br>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    .spacer {
+        margin-top: 20px;
+    }
+    body{
+        background-color: blanchedalmond;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Grading System</h1>
+    <div class="spacer"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Grade Settings</h2>
+            <form id="gradeForm">
+                <div class="form-group">
+                    <label for="A">A Grade (Minimum days attended)</label>
+                    <input type="number" class="form-control" id="A" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="B">B Grade (Minimum days attended)</label>
+                    <input type="number" class="form-control" id="B" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="C">C Grade (Minimum days attended)</label>
+                    <input type="number" class="form-control" id="C" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="D">D Grade (Minimum days attended)</label>
+                    <input type="number" class="form-control" id="D" min="1" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Grades</button>
+            </form>
+        </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Grade Assignment</h2>
+            <form id="assignGradeForm">
+                <div class="form-group">
+                    <label for="daysAttended">Days Attended</label>
+                    <input type="number" class="form-control" id="daysAttended" min="0" required>
+                </div>
+                <button type="submit" class="btn btn-success">Assign Grade</button>
+            </form>
+            <div class="spacer"></div>
+            <div id="assignedGradeResult"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Grade settings
+    let gradeCriteria = {
+        A: 26,
+        B: 20,
+        C: 15,
+        D: 10
+    };
+
+    // Function to update grade settings
+    function updateGrades() {
+        gradeCriteria.A = parseInt(document.getElementById('A').value);
+        gradeCriteria.B = parseInt(document.getElementById('B').value);
+        gradeCriteria.C = parseInt(document.getElementById('C').value);
+        gradeCriteria.D = parseInt(document.getElementById('D').value);
+    }
+
+    // Function to assign grade based on days attended
+    function assignGrade(daysAttended) {
+        let grade = '';
+        if (daysAttended >= gradeCriteria.A) {
+            grade = 'A';
+        } else if (daysAttended >= gradeCriteria.B) {
+            grade = 'B';
+        } else if (daysAttended >= gradeCriteria.C) {
+            grade = 'C';
+        } else if (daysAttended >= gradeCriteria.D) {
+            grade = 'D';
+        } else {
+            grade = 'F';
+        }
+        return grade;
+    }
+
+    // Form submission event handler for updating grades
+    document.getElementById('gradeForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        updateGrades();
+        alert('Grades updated successfully!');
+    });
+
+    // Form submission event handler for assigning grade
+    document.getElementById('assignGradeForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const daysAttended = parseInt(document.getElementById('daysAttended').value);
+        const assignedGrade = assignGrade(daysAttended);
+        document.getElementById('assignedGradeResult').innerHTML = `<h4>Assigned Grade: ${assignedGrade}</h4>`;
+    });
+
+    // Initial rendering of grade settings
+    updateGrades();
+
+</script>
+</body>
+</html>

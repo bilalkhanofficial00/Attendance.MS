@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave Approval</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Optional: Add some custom styles */
+    .leave-card {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-5 mb-4">Leave Approval</h1>
+    
+    <!-- Leave Requests -->
+    <div id="leaveRequests">
+      <!-- Leave Request Card Template -->
+      <template id="leaveRequestTemplate">
+        <div class="card leave-card">
+          <div class="card-body" style="background-color: black; color: white;">
+            <h5 class="card-title">Leave Request</h5>
+            <p class="card-text">Employee: <span class="employee-name"></span></p>
+            <p class="card-text">Leave Type: <span class="leave-type"></span></p>
+            <p class="card-text">From: <span class="leave-from"></span></p>
+            <p class="card-text">To: <span class="leave-to"></span></p>
+            <button onclick="App()" class="btn btn-success approve-btn">Approve</button>
+            <button onclick="rej()" class="btn btn-danger reject-btn">Reject</button>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+
+  
+
+  <!-- Bootstrap JS and jQuery (required for Bootstrap) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    function App(){
+        alert("You Approved That Request");
+    };
+    function rej(){
+        alert("You Rejected That Request");
+    };
+    // Sample leave requests data (can be fetched from a server)
+    const leaveRequestsData = [
+      { id: 1, employee: "John Doe", leaveType: "Vacation", from: "2024-03-25", to: "2024-03-28" },
+      { id: 2, employee: "Jane Smith", leaveType: "Sick Leave", from: "2024-04-01", to: "2024-04-02" },
+      { id: 3, employee: "peter Smith", leaveType: "relex Leave", from: "2024-08-01", to: "2024-04-08" },
+      // Add more leave requests as needed
+    ];
+
+    // Function to render leave requests
+    function renderLeaveRequests() {
+      const leaveRequestsContainer = document.getElementById("leaveRequests");
+      const leaveRequestTemplate = document.getElementById("leaveRequestTemplate");
+
+      leaveRequestsData.forEach(request => {
+        const clone = leaveRequestTemplate.content.cloneNode(true);
+        clone.querySelector(".employee-name").textContent = request.employee;
+        clone.querySelector(".leave-type").textContent = request.leaveType;
+        clone.querySelector(".leave-from").textContent = request.from;
+        clone.querySelector(".leave-to").textContent = request.to;
+        clone.querySelector(".approve-btn").addEventListener("click", () => handleAction(request.id, "approve"));
+        clone.querySelector(".reject-btn").addEventListener("click", () => handleAction(request.id, "reject"));
+        leaveRequestsContainer.appendChild(clone);
+      });
+    }
+
+    // Function to handle approval or rejection
+    function handleAction(requestId, action) {
+      // Here you can send a request to the server to update the status of the leave request
+      // For demonstration purposes, we'll just log the action to the console
+      console.log(`Leave request ${requestId} ${action}d.`);
+      // Optionally, you can remove the leave request from the UI after approval or rejection
+      // For example:
+      // const leaveCard = document.getElementById(`leaveCard_${requestId}`);
+      // leaveCard.remove();
+    }
+
+    // Render leave requests when the page loads
+    document.addEventListener("DOMContentLoaded", renderLeaveRequests);
+  </script>
+</body>
+</html>

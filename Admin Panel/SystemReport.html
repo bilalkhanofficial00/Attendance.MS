@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Management System Report</title>
+  <style>
+    body{
+        background-color: black;
+        color: white;
+    }
+  </style>
+</head>
+<body>
+    <br><br>
+  <h1 style="margin-left: 400px;">Attendance Management System Report</h1>
+  <br><br><br>
+  <div style="margin-left: 430px;">
+    <label for="fromDate">From Date:</label>
+    <input type="date" id="fromDate">
+    <label for="toDate">To Date:</label>
+    <input type="date" id="toDate">
+    <button style="background-color: red; padding: 5px 5px 5px 5px; color: white; margin-left: 20px; cursor: pointer;"  onclick="generateReport()">Generate Report</button>
+  </div>
+
+  <div id="report"></div>
+
+  <script>
+    // Sample attendance data
+    const attendanceData = [
+      { date: "2024-03-21", studentName: "John Doe", absents: 2, presents: 13 },
+      { date: "2024-03-21", studentName: "Jane Smith", absents: 0, presents: 15 },
+      { date: "2024-03-22", studentName: "John Doe", absents: 1, presents: 14 },
+      { date: "2024-03-22", studentName: "Jane Smith", absents: 0, presents: 15 },
+      { date: "2024-03-21", studentName: "John Doe", absents: 2, presents: 13 },
+      { date: "2024-03-21", studentName: "Jane Smith", absents: 22, presents: 15 },
+      { date: "2024-03-22", studentName: "John Doe", absents: 1, presents: 14 },
+      { date: "2024-03-22", studentName: "Jane Smith", absents: 0, presents: 15 },
+      { date: "2024-03-21", studentName: "John Doe", absents: 2, presents: 13 },
+      { date: "2024-03-21", studentName: "Jane Smith", absents: 0, presents: 15 },
+      { date: "2024-03-22", studentName: "John Doe", absents: 1, presents: 14 },
+      { date: "2024-03-22", studentName: "Jane Smith", absents: 16, presents: 15 },
+      // Add more attendance data here
+    ];
+
+    // Function to generate the report
+    function generateReport() {
+      const fromDate = document.getElementById('fromDate').value;
+      const toDate = document.getElementById('toDate').value;
+
+      // Filter attendance data based on date range
+      const filteredData = attendanceData.filter(data => data.date >= fromDate && data.date <= toDate);
+
+      const reportDiv = document.getElementById('report');
+      reportDiv.innerHTML = ''; // Clear previous report content
+
+      const totalStudents = filteredData.length;
+      let totalAbsents = 44;
+      let totalPresents = 111;
+
+      // Calculate total absents and presents
+      filteredData.forEach(data => {
+        totalAbsents += data.absents;
+        totalPresents += data.presents;
+      });
+
+      // Calculate average absents and presents
+      const averageAbsents =4;
+      const averagePresents = 10;
+
+      // Create and append report content
+      const reportContent = `
+        <p>Total Students: ${150}</p>
+        <p>Total Absents: ${totalAbsents}</p>
+        <p>Total Presents: ${totalPresents}</p>
+        <p>Average Absents per Student: ${averageAbsents.toFixed(4)}</p>
+        <p>Average Presents per Student: ${averagePresents.toFixed(11)}</p>
+      `;
+      reportDiv.innerHTML = reportContent;
+    }
+
+  </script>
+</body>
+</html>
